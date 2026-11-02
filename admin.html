@@ -210,6 +210,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
       <label class="field"><span>قیمت دوم (اختیاری)</span><input class="input" id="edPrice2" inputmode="numeric"></label>
     </div>
     <p class="hint">قیمت دوم برای آیتم‌هایی مثل اسپرسو سینگل / دبل است.</p>
+    <div class="row2">
+      <label class="field"><span>کالری (اختیاری)</span><input class="input" id="edKcal" inputmode="numeric" placeholder="مثلاً ۱۹۰"></label>
+      <label class="field"><span>زمان آماده‌سازی، دقیقه (اختیاری)</span><input class="input" id="edPrep" inputmode="numeric" placeholder="مثلاً ۵"></label>
+    </div>
     <label class="check"><input type="checkbox" id="edAvail"> موجود است</label>
     <label class="check"><input type="checkbox" id="edHidden"> پنهان از منو (برای آیتم‌های فصلی)</label>
     <p class="err" id="edErr" role="alert"></p>
@@ -245,7 +249,7 @@ function toLatin(s){ return String(s||'').replace(/[۰-۹]/g,function(d){return 
 function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return (c==='x'?r:(r&3|8)).toString(16);})); }
 var toastT;
 function toast(msg, bad){ var t=$('toast'); t.textContent=msg; t.className='toast'+(bad?' bad':''); t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){t.hidden=true;}, bad?4500:2200); }
-function netMsg(e){ return (e && e.message && e.message !== 'Failed to fetch') ? e.message : 'اتصال به سرور برقرار نشد. اینترنت را بررسی کنید.'; }
+function netMsg(e){ if (e && e.message && /kcal|prep_min/.test(e.message)) return 'اول فایل update-kcal-prep.sql را یک‌بار در Supabase اجرا کنید.'; return (e && e.message && e.message !== 'Failed to fetch') ? e.message : 'اتصال به سرور برقرار نشد. اینترنت را بررسی کنید.'; }
 
 // ───────── Supabase (direct HTTP, no libraries) ─────────
 function saveSession(s){ session = s; try{ localStorage.setItem(SESSION_KEY, JSON.stringify(s)); }catch(e){} }
@@ -420,6 +424,8 @@ function openEditor(item){
   $('edCat').value = item ? item.category_id : (state.filter !== 'all' ? state.filter : state.cats[0].id);
   $('edPrice').value = item && item.price != null ? item.price : '';
   $('edPrice2').value = item && item.price2 != null ? item.price2 : '';
+  $('edKcal').value = item && item.kcal != null ? item.kcal : '';
+  $('edPrep').value = item && item.prep_min != null ? item.prep_min : '';
   $('edAvail').checked = item ? item.available : true;
   $('edHidden').checked = item ? item.hidden : false;
   $('edDelete').hidden = !item;
@@ -455,10 +461,14 @@ $('editor').addEventListener('submit', async function(e){
   if (!name) { err.textContent = 'نام آیتم را وارد کنید.'; return; }
   if (!/^\d+$/.test(p1)) { err.textContent = 'قیمت را فقط با عدد وارد کنید.'; return; }
   if (p2 && !/^\d+$/.test(p2)) { err.textContent = 'قیمت دوم را فقط با عدد وارد کنید یا خالی بگذارید.'; return; }
+  var kc = toLatin($('edKcal').value), pm = toLatin($('edPrep').value);
+  if (kc && !/^\d+$/.test(kc)) { err.textContent = 'کالری را فقط با عدد وارد کنید یا خالی بگذارید.'; return; }
+  if (pm && !/^\d+$/.test(pm)) { err.textContent = 'زمان آماده‌سازی را فقط با عدد (دقیقه) وارد کنید یا خالی بگذارید.'; return; }
 
   var item = ed.item, id = item ? item.id : uid();
   var row = { name: name, description: $('edDesc').value.trim(), category_id: $('edCat').value,
-    price: +p1, price2: p2 ? +p2 : null, available: $('edAvail').checked, hidden: $('edHidden').checked };
+    price: +p1, price2: p2 ? +p2 : null, kcal: kc ? +kc : null, prep_min: pm ? +pm : null,
+    available: $('edAvail').checked, hidden: $('edHidden').checked };
   var oldPath = item && item.photo_path;
 
   $('edSave').disabled = true; $('edSave').textContent = 'در حال ذخیره…';
