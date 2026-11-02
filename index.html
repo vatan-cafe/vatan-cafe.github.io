@@ -99,15 +99,18 @@ main{max-width:720px;margin:0 auto;padding:4px 14px 28px}
   font-size:30px;font-weight:300;letter-spacing:.02em;line-height:1.2;text-transform:uppercase;color:var(--ink)}
 .items{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 @media (min-width:640px){.items{grid-template-columns:1fr 1fr}}
-.item{display:flex;align-items:stretch;gap:14px;padding:18px;background:var(--surface);border:1px solid var(--hair);
-  border-radius:20px}
-.item.has-ph{min-height:156px}
-.info{flex:1;min-width:0;display:flex;flex-direction:column}
-.name{margin:0;font-size:19px;font-weight:700;line-height:1.45}
-.desc{margin:6px 0 0;font-size:13.5px;color:var(--muted);line-height:1.75}
-.price{margin-top:auto;padding-top:8px;font-size:19px;font-weight:700;color:var(--price);white-space:nowrap}
-.price small{font-size:14px;font-weight:700;margin-inline-start:3px}
-.thumb{flex:none;align-self:center;width:120px;height:120px;border-radius:16px;background:var(--bg);border:0;padding:0;cursor:zoom-in;overflow:hidden}
+.item{display:flex;align-items:stretch;gap:14px;padding:12px;background:var(--surface);border:1px solid var(--hair);
+  border-radius:18px}
+.item.has-ph{min-height:140px}
+.info{flex:1;min-width:0;display:flex;flex-direction:column;padding:4px 2px}
+.name{margin:0;font-size:17px;font-weight:700;line-height:1.5}
+.desc{margin:4px 0 0;font-size:13px;color:var(--muted);line-height:1.7}
+.meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0 0;padding:0;list-style:none;font-size:13px;color:var(--chip-ink)}
+.meta li{display:inline-flex;align-items:center;gap:5px}
+.meta svg{width:14px;height:14px;color:var(--muted);flex:none}
+.price{margin-top:auto;padding-top:10px;font-size:21px;font-weight:700;color:var(--price);white-space:nowrap;line-height:1.4}
+.unit{display:inline-block;height:1.5em;width:1.714em;vertical-align:-.42em;margin-inline-start:6px;background:currentColor;-webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;mask:url(data:image/png;base64,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) center/contain no-repeat}
+.thumb{flex:none;align-self:stretch;width:116px;min-height:116px;border-radius:14px;background:var(--bg);border:0;padding:0;cursor:zoom-in;overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover}
 .item.out .name,.item.out .desc,.item.out .thumb{opacity:.45}
 .badge{margin-top:auto;align-self:flex-start;font-size:12.5px;font-weight:700;padding:4px 12px;border-radius:8px;background:var(--bg);color:var(--muted)}
@@ -216,6 +219,15 @@ footer{max-width:720px;margin:0 auto;padding:8px 14px 40px}
    ['چای و دمنوش','Tea & Infusions'],['بار سرد','Cold Bar'],['میلک شیک','Milkshakes'],['دسر','Desserts'],
    ['نیم چاشت','Brunch'],['صبحانه','Breakfast'],['کیک','Cakes']].forEach(function(p){ EN[norm(p[0])] = p[1]; });
 
+  var I_FIRE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21c-3.9 0-7-2.8-7-6.6 0-2.9 1.9-5 3.6-6.9.4 1.6 1.3 2.7 2.4 3.1C11.3 7 12.6 4.6 15 3c-.3 2.6.7 4.2 2.1 5.9C18.3 10.4 19 12 19 14.4 19 18.2 15.9 21 12 21z"/></svg>';
+  var I_CLOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>';
+  function meta(it){
+    var m='';
+    if (it.kcal) m+='<li>'+I_FIRE+esc(it.kcal)+' کالری</li>';
+    if (it.prep) m+='<li>'+I_CLOCK+esc(it.prep)+' دقیقه</li>';
+    return m ? '<ul class="meta">'+m+'</ul>' : '';
+  }
+
   function render(filter){
     if (!data) return;
     var q = norm(filter);
@@ -234,8 +246,8 @@ footer{max-width:720px;margin:0 auto;padding:8px 14px 40px}
         var out = it.available === false;
         var ph = it.photo ? '<button class="thumb" data-id="'+esc(it.id)+'" aria-label="عکس '+esc(it.name)+'"><img src="'+esc(it.photo)+'" alt="" loading="lazy"></button>' : '';
         html += '<li class="item'+(out?' out':'')+(ph?' has-ph':'')+'">' +
-          '<div class="info"><p class="name">'+esc(it.name)+'</p>' + (it.desc ? '<p class="desc">'+esc(it.desc)+'</p>' : '') +
-          (out ? '<span class="badge">تمام شد</span>' : '<span class="price">'+esc(fmtPrice(it.price))+'<small>ت</small></span>') + '</div>' + ph + '</li>';
+          '<div class="info"><p class="name">'+esc(it.name)+'</p>' + (it.desc ? '<p class="desc">'+esc(it.desc)+'</p>' : '') + meta(it) +
+          (out ? '<span class="badge">تمام شد</span>' : '<span class="price">'+esc(fmtPrice(it.price))+'<span class="unit" role="img" aria-label="هزار تومان"></span></span>') + '</div>' + ph + '</li>';
       });
       html += '</ul></section>';
     });
@@ -353,7 +365,7 @@ footer{max-width:720px;margin:0 auto;padding:8px 14px 40px}
       items: items.map(function(i){
         return { id: i.id, category: i.category_id, name: i.name, desc: i.description,
           price: i.price2 != null ? [i.price, i.price2] : i.price,
-          photo: i.photo_url, available: i.available, hidden: i.hidden };
+          photo: i.photo_url, available: i.available, hidden: i.hidden, kcal: i.kcal, prep: i.prep_min };
       })
     };
   }
